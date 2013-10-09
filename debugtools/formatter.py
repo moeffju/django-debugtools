@@ -101,13 +101,13 @@ def pformat_django_context_html(object):
                 if isinstance(value, property):
                     attrs[name] = _try_call(lambda: getattr(object, name))
                 elif isinstance(value, types.FunctionType):
-                    spec = inspect.getargspec(value)
-                    if len(spec.args) == 1 or len(spec.args) == len(spec.defaults or ()) + 1:
-                        # should be simple method(self) signature to be callable in the template
-                        # function may have args (e.g. BoundField.as_textarea) as long as they have defaults.
-                        attrs[name] = _try_call(lambda: value(object))
-                    else:
-                        del attrs[name]
+                    # spec = inspect.getargspec(value)
+                    # if len(spec.args) == 1 or len(spec.args) == len(spec.defaults or ()) + 1:
+                    #     # should be simple method(self) signature to be callable in the template
+                    #     # function may have args (e.g. BoundField.as_textarea) as long as they have defaults.
+                    #     attrs[name] = _try_call(lambda: value(object))
+                    # else:
+                    del attrs[name]
                 elif hasattr(value, '__get__'):
                     # fetched the descriptor, e.g. django.db.models.fields.related.ForeignRelatedObjectsDescriptor
                     attrs[name] = value = _try_call(lambda: getattr(object, name))
